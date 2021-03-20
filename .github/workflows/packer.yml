@@ -1,0 +1,23 @@
+on: push
+
+jobs:
+  proxmox:
+    name: Build Proxmox Template
+    runs-on: ubuntu-20.04
+    # don't run for forks
+    if: github.event.repository.full_name == github.repository
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Run Packer
+        uses: docker://hashicorp/packer:1.7.0
+        with:
+          args: build -only proxmox-iso.proxmox k3os.pkr.hcl
+        env:
+          PROXMOX_USERNAME: "packer@pve!github-actions"
+          PROXMOX_PASSWORD: ${{ secrets.PROXMOX_TOKEN }}
+          PKR_VAR_config_url: "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/config/proxmox.yaml"
+          PKR_VAR_git_ref: ${{ github.ref }}
+          PKR_VAR_git_sha: ${{ github.sha }}
