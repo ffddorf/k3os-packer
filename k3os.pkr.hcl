@@ -49,8 +49,9 @@ source "proxmox-iso" "proxmox" {
     git sha: ${var.git_sha}
   EOF
 
-  iso_url      = "https://github.com/rancher/k3os/releases/download/${var.k3os_version}/k3os-amd64.iso"
-  iso_checksum = "sha256:${var.iso_checksum}"
+  iso_url          = "https://github.com/rancher/k3os/releases/download/${var.k3os_version}/k3os-amd64.iso"
+  iso_checksum     = "sha256:${var.iso_checksum}"
+  iso_storage_pool = var.storage_pool
 
   os                      = "l26"
   memory                  = "2048"
