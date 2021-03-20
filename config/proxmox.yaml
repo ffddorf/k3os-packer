@@ -1,0 +1,18 @@
+ssh_authorized_keys:
+  - github:nomaster
+  - github:mraerino
+
+k3os:
+  data_sources:
+    - cdrom
+  sysctl:
+    net.ipv6.conf.eth0.accept_ra: "2"
+
+write_files:
+  # enable qemu-guest-agent
+  # ref: https://github.com/rancher/k3os/issues/291
+  - path: /etc/conf.d/qemu-guest-agent
+    content: |-
+      GA_PATH="/dev/vport1p1"
+    owner: root
+    permissions: "0644"
