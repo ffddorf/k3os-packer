@@ -49,10 +49,7 @@ source "proxmox-iso" "proxmox" {
     git sha: ${var.git_sha}
   EOF
 
-  # It's not feasible to upload the ISO to Proxmox during the packer run.
-  # Please upload the iso to Proxmox manually when upgrading to a new version.
-  # Via ssh: `curl -o /var/lib/vz/template/iso/k3os-amd64-<VERSION>.iso -L <RELEASE>`
-  iso_file     = "local:iso/k3os-amd64-${var.k3os_version}.iso"
+  iso_url      = "https://github.com/rancher/k3os/releases/download/${var.k3os_version}/k3os-amd64.iso"
   iso_checksum = "sha256:${var.iso_checksum}"
 
   os                      = "l26"
