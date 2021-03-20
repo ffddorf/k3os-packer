@@ -37,6 +37,7 @@ locals {
 source "proxmox-iso" "proxmox" {
   proxmox_url  = "https://pve.freifunk-duesseldorf.de/api2/json"
   node         = "pm2"
+  pool         = "Packer"
   communicator = "none"
   boot_command = concat(local.boot_command_pre, local.boot_command_args, [" ", "k3os.install.config_url=${var.config_url}"], local.boot_command_post)
 
