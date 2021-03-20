@@ -18,8 +18,8 @@ jobs:
           args: build -only proxmox-iso.proxmox k3os.pkr.hcl
         env:
           PACKER_LOG: "1"
-          PROXMOX_USERNAME: "packer@pve!github-actions"
-          PROXMOX_PASSWORD: ${{ secrets.PROXMOX_TOKEN }}
+          PROXMOX_USERNAME: "github-actions-packer@pve"
+          PROXMOX_PASSWORD: ${{ secrets.PROXMOX_PACKER_PASSWORD }}
           PKR_VAR_config_url: "https://raw.githubusercontent.com/${{ github.repository }}/${{ github.sha }}/config/proxmox.yaml"
           PKR_VAR_git_ref: ${{ github.ref }}
           PKR_VAR_git_sha: ${{ github.sha }}
