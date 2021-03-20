@@ -18,6 +18,16 @@ variable "storage_pool" {
   default = "local"
 }
 
+variable "git_ref" {
+  type    = string
+  default = "unknown"
+}
+
+variable "git_sha" {
+  type    = string
+  default = "unknown"
+}
+
 locals {
   boot_command_pre  = ["<wait>", "<tab>", "<down>", "<wait>", "e", "<down>", "<down>", "<down>", "<down>", "<down>", "<down>", "<end>"]
   boot_command_args = [" ", "k3os.install.device=/dev/sda", " ", "k3os.mode=install", " ", "k3os.install.silent=true", " ", "k3os.install.debug=true", " ", "k3os.install.power_off=false"]
@@ -31,7 +41,12 @@ source "proxmox-iso" "proxmox" {
   boot_command = concat(local.boot_command_pre, local.boot_command_args, [" ", "k3os.install.config_url=${var.config_url}"], local.boot_command_post)
 
   template_name        = "k3os-${var.k3os_version}"
-  template_description = "k3os ${var.k3os_version}, generated on ${timestamp()}"
+  template_description = <<EOF
+    k3os ${var.k3os_version}
+    generated on ${timestamp()}"
+    git ref: ${var.git_ref}
+    git sha: ${var.git_sha}
+  EOF
 
   # It's not feasible to upload the ISO to Proxmox during the packer run.
   # Please upload the iso to Proxmox manually when upgrading to a new version.
