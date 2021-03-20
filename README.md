@@ -38,3 +38,17 @@ export PROXMOX_PASSWORD=<PASSWORD>
 
 packer build -only proxmox-iso.proxmox k3os.pkr.hcl
 ```
+
+### Updating the k3os Release
+
+Since the Proxmox API won't accept an ISO upload from packer, the ISO needs to be uploaded manually in Proxmox.
+This can be done using the UI (very slow) or via curl on the host system:
+
+```sh
+export K3OS_VERSION=v0.19.5-rc.1
+curl -L \
+  -o /var/lib/vz/template/iso/k3os-amd64-${K3OS_VERSION}.iso \
+  https://github.com/rancher/k3os/releases/download/${K3OS_VERSION}/k3os-amd64.iso
+```
+
+You can then adjust the `k3os_version` and `iso_checksum` packer variables to build based on the new version.
