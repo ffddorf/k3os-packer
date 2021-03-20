@@ -74,10 +74,6 @@ source "proxmox-iso" "proxmox" {
   }
 }
 
-# Although we don't run any provisioners, Virtualbox needs SSH to determine
-# when the install is finished.
-# In order to use this, put your github user name or pubkey into `config/local.yaml`.
-# Make sure you have a local ssh agent with your key running.
 source "virtualbox-iso" "local-vbox" {
   guest_os_type   = "Linux26_64"
   keep_registered = true
@@ -88,6 +84,10 @@ source "virtualbox-iso" "local-vbox" {
   boot_command   = concat(local.boot_command_pre, local.boot_command_args, [" ", "k3os.install.config_url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/local.yaml"], local.boot_command_post)
   http_directory = "config"
 
+  # Although we don't run any provisioners, Virtualbox needs SSH to determine
+  # when the install is finished.
+  # In order to use this, put your github user name or pubkey into `config/local.yaml`.
+  # Make sure you have a local ssh agent with your key running.
   ssh_username   = "rancher"
   ssh_agent_auth = true
 }
