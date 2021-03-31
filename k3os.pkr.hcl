@@ -54,11 +54,10 @@ source "proxmox-iso" "proxmox" {
   iso_file     = "local:iso/k3os-amd64-${var.k3os_version}.iso"
   iso_checksum = "sha256:${var.iso_checksum}"
 
-  os                      = "l26"
-  memory                  = "2048"
-  cloud_init              = true
-  cloud_init_storage_pool = var.storage_pool
-  unmount_iso             = true
+  os          = "l26"
+  memory      = "2048"
+  cloud_init  = false
+  unmount_iso = true
 
   disks {
     disk_size         = "4G"
