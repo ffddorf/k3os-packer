@@ -50,6 +50,7 @@ source "proxmox-iso" "proxmox" {
   pool         = "Packer"
   communicator = "none"
   boot_command = concat(local.boot_command_pre, local.boot_command_args, local.boot_command_args_proxmox, local.boot_command_post)
+  boot_wait    = "5s"
 
   template_name        = "k3os-${var.k3os_version}"
   template_description = <<EOF
