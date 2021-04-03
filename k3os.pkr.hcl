@@ -29,8 +29,18 @@ variable "git_sha" {
 }
 
 locals {
-  boot_command_pre  = ["<wait>", "<tab>", "<down>", "<wait>", "e", "<down>", "<down>", "<down>", "<down>", "<down>", "<down>", "<end>"]
-  boot_command_args = [" ", "k3os.install.device=/dev/sda", " ", "k3os.mode=install", " ", "k3os.install.silent=true", " ", "k3os.install.debug=true", " ", "k3os.install.power_off=true"]
+  boot_command_pre = ["<wait>", "<tab>", "<down>", "<wait>", "e", "<down>", "<down>", "<down>", "<down>", "<down>", "<down>", "<end>"]
+  boot_command_args = [
+    " ", "k3os.install.device=/dev/sda",
+    " ", "k3os.mode=install",
+    " ", "k3os.install.silent=true",
+    " ", "k3os.install.debug=true",
+  ]
+  boot_command_args_proxmox = [
+    " ", "k3os.install.power_off=true",
+    " ", "k3os.install.config_url=${var.config_url}",
+    " ", "k3os.install.tty=ttyS0"
+  ]
   boot_command_post = ["<F10>"]
 }
 
@@ -39,7 +49,8 @@ source "proxmox-iso" "proxmox" {
   node         = "pm2"
   pool         = "Packer"
   communicator = "none"
-  boot_command = concat(local.boot_command_pre, local.boot_command_args, [" ", "k3os.install.config_url=${var.config_url}"], local.boot_command_post)
+  boot_command = concat(local.boot_command_pre, local.boot_command_args, local.boot_command_args_proxmox, local.boot_command_post)
+  boot_wait    = "5s"
 
   template_name        = "k3os-${var.k3os_version}"
   template_description = <<EOF
