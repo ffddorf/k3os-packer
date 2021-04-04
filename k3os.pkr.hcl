@@ -5,12 +5,12 @@ variable "config_url" {
 
 variable "iso_checksum" {
   type    = string
-  default = "fa4d95676ddf94b8a5488781c638ca13b6c532ea06bb74d2bcefd194b5ce760b"
+  default = "30d676374666ad435aa607c18d664ecf1a4eb5fa5d0ff7f6798b43a259e5d600"
 }
 
 variable "k3os_version" {
   type    = string
-  default = "v0.19.5-rc.1"
+  default = "v0.20.4-k3s1r0-patched"
 }
 
 variable "storage_pool" {
