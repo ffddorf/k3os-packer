@@ -81,11 +81,12 @@ source "proxmox-iso" "proxmox" {
     format            = "qcow2"
     storage_pool      = var.storage_pool
     storage_pool_type = "directory"
-    type              = "scsi"
+    type              = "virtio"
   }
 
   network_adapters {
     bridge = "vmbr0"
+    model  = "virtio"
   }
 }
 
