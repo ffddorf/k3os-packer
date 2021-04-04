@@ -13,6 +13,6 @@ write_files:
   # ref: https://github.com/rancher/k3os/issues/291
   - path: /etc/conf.d/qemu-guest-agent
     content: |-
-      GA_PATH="/dev/vport1p1"
+      GA_PATH="/dev/vport2p1"
     owner: root
     permissions: "0644"
