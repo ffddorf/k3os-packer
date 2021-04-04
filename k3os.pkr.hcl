@@ -45,7 +45,12 @@ locals {
     " ", "k3os.install.config_url=${var.config_url}",
     " ", "k3os.install.tty=ttyS0"
   ]
-  boot_command_post = ["<F10>"]
+  boot_command_post = [
+    "<F10>",
+    # packer attempts to shut the VM down directly after booting
+    # but we need to wait for it to run the installation first
+    "<wait30s>"
+  ]
 }
 
 source "proxmox-iso" "proxmox" {
@@ -109,12 +114,4 @@ source "virtualbox-iso" "local-vbox" {
 
 build {
   sources = ["source.proxmox-iso.proxmox", "source.virtualbox-iso.local-vbox"]
-
-  # packer attempts to shut the VM down directly after booting
-  # but we need to wait for it to run the installation first
-  provisioner "shell-local" {
-    only         = ["source.proxmox-iso.proxmox"]
-    pause_before = "30s"
-    inline       = ["echo should be done now?"]
-  }
 }
