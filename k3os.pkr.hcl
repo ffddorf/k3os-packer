@@ -15,7 +15,7 @@ variable "k3os_version" {
 
 variable "storage_pool" {
   type    = string
-  default = "local"
+  default = "system"
 }
 
 variable "git_ref" {
