@@ -109,4 +109,12 @@ source "virtualbox-iso" "local-vbox" {
 
 build {
   sources = ["source.proxmox-iso.proxmox", "source.virtualbox-iso.local-vbox"]
+
+  # packer attempts to shut the VM down directly after booting
+  # but we need to wait for it to run the installation first
+  provisioner "shell-local" {
+    only         = ["source.proxmox-iso.proxmox"]
+    pause_before = "30s"
+    inline       = ["echo should be done now?"]
+  }
 }
