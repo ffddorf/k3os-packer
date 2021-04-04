@@ -84,6 +84,10 @@ source "proxmox-iso" "proxmox" {
     type              = "virtio"
   }
 
+  vga {
+    type = "serial0"
+  }
+
   network_adapters {
     bridge = "vmbr0"
     model  = "virtio"
