@@ -54,6 +54,7 @@ source "proxmox-iso" "proxmox" {
   node         = var.target_node
   pool         = "Packer"
   communicator = "none"
+  qemu_agent   = true
   boot_command = concat(local.boot_command_pre, local.boot_command_args, local.boot_command_args_proxmox, local.boot_command_post)
   boot_wait    = "5s"
 
