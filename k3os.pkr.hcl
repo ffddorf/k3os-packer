@@ -80,7 +80,7 @@ source "proxmox-iso" "proxmox" {
     format            = "qcow2"
     storage_pool      = var.storage_pool
     storage_pool_type = "directory"
-    type              = "virtio"
+    type              = "scsi"
   }
 
   network_adapters {
