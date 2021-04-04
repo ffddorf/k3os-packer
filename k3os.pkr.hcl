@@ -18,6 +18,11 @@ variable "storage_pool" {
   default = "system"
 }
 
+variable "storage_pool_type" {
+  type    = string
+  default = "rbd"
+}
+
 variable "target_node" {
   type    = string
   default = "pm2"
@@ -81,10 +86,11 @@ source "proxmox-iso" "proxmox" {
   unmount_iso = true
 
   disks {
-    disk_size    = "4G"
-    format       = "raw"
-    storage_pool = var.storage_pool
-    type         = "virtio"
+    disk_size         = "4G"
+    format            = "raw"
+    storage_pool      = var.storage_pool
+    storage_pool_type = var.storage_pool_type
+    type              = "virtio"
   }
 
   network_adapters {
