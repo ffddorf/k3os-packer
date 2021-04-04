@@ -18,6 +18,11 @@ variable "storage_pool" {
   default = "system"
 }
 
+variable "target_node" {
+  type    = string
+  default = "pm2"
+}
+
 variable "git_ref" {
   type    = string
   default = "unknown"
@@ -46,7 +51,7 @@ locals {
 
 source "proxmox-iso" "proxmox" {
   proxmox_url  = "https://pve.freifunk-duesseldorf.de/api2/json"
-  node         = "pm2"
+  node         = var.target_node
   pool         = "Packer"
   communicator = "none"
   boot_command = concat(local.boot_command_pre, local.boot_command_args, local.boot_command_args_proxmox, local.boot_command_post)
