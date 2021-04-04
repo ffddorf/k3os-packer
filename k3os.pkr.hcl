@@ -37,7 +37,6 @@ locals {
   boot_command_pre = ["<wait>", "<tab>", "<down>", "<wait>", "e", "<down>", "<down>", "<down>", "<down>", "<down>", "<down>", "<end>"]
   boot_command_args = [
     " ", "k3os.install.device=/dev/sda",
-    " ", "k3os.mode=install",
     " ", "k3os.install.silent=true",
     " ", "k3os.install.debug=true",
   ]
