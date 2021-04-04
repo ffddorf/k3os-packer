@@ -36,11 +36,11 @@ variable "git_sha" {
 locals {
   boot_command_pre = ["<wait>", "<tab>", "<down>", "<wait>", "e", "<down>", "<down>", "<down>", "<down>", "<down>", "<down>", "<end>"]
   boot_command_args = [
-    " ", "k3os.install.device=/dev/sda",
     " ", "k3os.install.silent=true",
     " ", "k3os.install.debug=true",
   ]
   boot_command_args_proxmox = [
+    " ", "k3os.install.device=/dev/vda",
     " ", "k3os.install.power_off=true",
     " ", "k3os.install.config_url=${var.config_url}",
     " ", "k3os.install.tty=ttyS0"
@@ -81,11 +81,10 @@ source "proxmox-iso" "proxmox" {
   unmount_iso = true
 
   disks {
-    disk_size         = "4G"
-    format            = "qcow2"
-    storage_pool      = var.storage_pool
-    storage_pool_type = "directory"
-    type              = "scsi"
+    disk_size    = "4G"
+    format       = "raw"
+    storage_pool = var.storage_pool
+    type         = "virtio"
   }
 
   network_adapters {
@@ -101,7 +100,7 @@ source "virtualbox-iso" "local-vbox" {
   iso_checksum = "sha256:${var.iso_checksum}"
   iso_url      = "https://github.com/rancher/k3os/releases/download/${var.k3os_version}/k3os-amd64.iso"
 
-  boot_command   = concat(local.boot_command_pre, local.boot_command_args, [" ", "k3os.install.config_url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/local.yaml"], local.boot_command_post)
+  boot_command   = concat(local.boot_command_pre, local.boot_command_args, [" ", "k3os.install.device=/dev/sda", " ", "k3os.install.config_url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/local.yaml"], local.boot_command_post)
   http_directory = "config"
 
   # Although we don't run any provisioners, Virtualbox needs SSH to determine
