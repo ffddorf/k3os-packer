@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run Packer
-        uses: docker://hashicorp/packer:1.7.0
+        uses: docker://hashicorp/packer:1.7.1
         with:
           args: build -only proxmox-iso.proxmox k3os.pkr.hcl
         env:
