@@ -11,8 +11,19 @@ k3os:
 write_files:
   # enable qemu-guest-agent
   # ref: https://github.com/rancher/k3os/issues/291
-  - path: /etc/conf.d/qemu-guest-agent
+  - path: /etc/setup-qemu-guest-agent.sh
     content: |-
-      GA_PATH="/dev/vport2p1"
+      #!/bin/bash
+
+      for i in 0 1 2 3; do
+        if [ -c /dev/vport${i}p1 ]; then
+          echo "GA_PATH=\"/dev/vport${i}p1\"" > /etc/conf.d/qemu-guest-agent
+          /etc/init.d/qemu-guest-agent restart
+          exit 0
+        fi
+      done
     owner: root
-    permissions: "0644"
+    permissions: "0755"
+
+boot_cmd:
+  - /etc/setup-qemu-guest-agent.sh
